@@ -1,0 +1,17 @@
+# Large raw dataset (>100 MB exceeds GitHub's single-file limit without Git LFS)
+data/arxiv_cs_subset.jsonl
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
