@@ -21,7 +21,9 @@ The repository currently contains the project proposal and the curated 75,000-pa
 │   ├── arxiv_cs_subset.jsonl.gz   # Compressed full 75,000-paper CS subset tracked in Git (~46 MB)
 │   └── arxiv_cs_subset.jsonl      # Uncompressed full 75,000-paper subset (~138 MB, gitignored)
 ├── docs/
-│   └── proposal.md                # Submitted project proposal
+│   ├── proposal.md                # Submitted project proposal
+│   └── requirements.md            # Course project specification & grading criteria
+├── index/                         # Generated index & metadata files (gitignored)
 ├── .gitignore
 └── README.md
 ```

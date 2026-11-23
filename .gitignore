@@ -1,6 +1,9 @@
 # Large raw dataset (>100 MB exceeds GitHub's single-file limit without Git LFS)
 data/arxiv_cs_subset.jsonl
 
+# Generated index and metadata files
+index/
+
 # Python
 __pycache__/
 *.py[cod]
