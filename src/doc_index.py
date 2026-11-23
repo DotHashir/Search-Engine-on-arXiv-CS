@@ -247,13 +247,15 @@ class DocumentIndex:
 
 if __name__ == "__main__":
     # Quick test on sample dataset (This block will be ignored if another file runs this script)
-    doc_idx = DocumentIndex(index_dir="index")
-    sample_file = "data/arxiv_cs_sample.jsonl"
+    project_root = Path(__file__).resolve().parent.parent
+    doc_idx = DocumentIndex(index_dir=str(project_root / "index"))
+    sample_file = project_root / "data" / "arxiv_cs_sample.jsonl"
 
-    if os.path.exists(sample_file):
-        count = doc_idx.build_from_jsonl(sample_file)
+    if sample_file.exists():
+        count = doc_idx.build_from_jsonl(str(sample_file))
         print(f"Indexed {count} documents into 'index/'.")
         if count > 0:
             sample_doc = doc_idx.get_document_info(0)
             print(f"DocID 0 Title: {sample_doc['title']}")
             print(f"DocID 0 Metadata: {sample_doc['ranking_meta']}")
+    doc_idx.close()
