@@ -72,6 +72,8 @@ class DocumentIndex:
         self.info_path = self.index_dir / "doc_info.jsonl" # The variable-width file holding titles, authors, categories and abstracts
         self.map_path = self.index_dir / "arxiv_id_map.json" # The dictionary mapping string arXiv IDs to sequential integer docIDs
 
+        self._bin_file = None
+
         # Maps string arxiv_id -> integer docID
         self.arxiv_to_docid: Dict[str, int] = {}
         self.num_docs: int = 0
@@ -102,6 +104,7 @@ class DocumentIndex:
                 self._write_record(record, bin_file, info_file)
 
         self.save_id_map()
+        self.close()
         return self.num_docs
 
     def _write_record(self, record: Dict[str, Any], bin_file, info_file) -> Optional[int]:
@@ -179,6 +182,7 @@ class DocumentIndex:
 
         if doc_id is not None:
             self.save_id_map()
+        self.close()
         return doc_id
 
     def get_ranking_metadata(self, doc_id: int) -> Dict[str, Any]:
@@ -186,9 +190,11 @@ class DocumentIndex:
         if doc_id < 0 or doc_id >= self.num_docs:
             raise IndexError(f"doc_id {doc_id} out of range (0...{self.num_docs - 1})")
 
-        with open(self.bin_path, "rb") as bin_file:
-            bin_file.seek(doc_id * RECORD_SIZE)
-            raw = bin_file.read(RECORD_SIZE)
+        if self._bin_file is None:
+            self._bin_file = open(self.bin_path, "rb")
+            
+        self._bin_file.seek(doc_id * RECORD_SIZE)
+        raw = self._bin_file.read(RECORD_SIZE)
 
         (
             info_offset,
@@ -233,6 +239,11 @@ class DocumentIndex:
         # Saves the in-memory arxiv_id -> doc_id dictionary to disk
         with open(self.map_path, "w", encoding="utf-8") as f:
             json.dump(self.arxiv_to_docid, f)
+
+    def close(self) -> None:
+        if self._bin_file is not None:
+            self._bin_file.close()
+            self._bin_file = None
 
 if __name__ == "__main__":
     # Quick test on sample dataset (This block will be ignored if another file runs this script)

@@ -12,7 +12,7 @@ An advanced search engine built over a curated Computer Science (`cs.*`) subset 
 
 ## Current Project State
 
-The repository currently contains the project proposal and the curated 75,000-paper arXiv Computer Science dataset subset:
+The repository currently contains the project proposal, requirements, curated 75,000-paper arXiv Computer Science dataset subset, and the binary document index module:
 
 ```text
 .
@@ -24,8 +24,18 @@ The repository currently contains the project proposal and the curated 75,000-pa
 │   ├── proposal.md                # Submitted project proposal
 │   └── requirements.md            # Course project specification & grading criteria
 ├── index/                         # Generated index & metadata files (gitignored)
+├── src/
+│   └── doc_index.py               # Fixed-width binary DocumentIndex (doc_index.bin + doc_info.jsonl)
 ├── .gitignore
 └── README.md
+```
+
+### Building the Document Index
+
+Run the document indexer on the 1,000-paper sample dataset (generates `doc_index.bin`, `doc_info.jsonl`, and `arxiv_id_map.json` inside `index/`):
+
+```bash
+python3 src/doc_index.py
 ```
 
 ### Extracting the Full Dataset After Cloning
