@@ -12,7 +12,7 @@ An advanced search engine built over a curated Computer Science (`cs.*`) subset 
 
 ## Current Project State
 
-The repository currently contains the project proposal, requirements, curated 75,000-paper arXiv Computer Science dataset subset, binary document index module, and LaTeX-aware text tokenizer:
+The repository currently contains the project proposal, requirements, curated 75,000-paper arXiv Computer Science dataset subset, binary document index, LaTeX-aware text tokenizer, and corpus lexicon:
 
 ```text
 .
@@ -26,17 +26,19 @@ The repository currently contains the project proposal, requirements, curated 75
 ├── index/                         # Generated index & metadata files (gitignored)
 ├── src/
 │   ├── doc_index.py               # Fixed-width binary DocumentIndex (doc_index.bin + doc_info.jsonl)
+│   ├── lexicon.py                 # Thread-safe Lexicon mapping unique terms to word_ids with df/cf stats
 │   └── tokenizer.py               # LaTeX/Unicode-aware CS paper & query tokenizer
 ├── .gitignore
 └── README.md
 ```
 
-### Building the Document Index
+### Building the Document Index & Lexicon
 
-Run the document indexer on the 1,000-paper sample dataset (generates `doc_index.bin`, `doc_info.jsonl`, and `arxiv_id_map.json` inside `index/`):
+Run the document indexer and lexicon builder on the 1,000-paper sample dataset (generates `doc_index.bin`, `doc_info.jsonl`, `arxiv_id_map.json`, and `lexicon.jsonl` inside `index/`):
 
 ```bash
 python3 src/doc_index.py
+python3 src/lexicon.py
 ```
 
 ### Extracting the Full Dataset After Cloning
